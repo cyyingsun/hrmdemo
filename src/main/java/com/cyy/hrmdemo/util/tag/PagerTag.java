@@ -1,17 +1,14 @@
-﻿package com.cyy.hrmdemo.util.tag;
+package com.cyy.hrmdemo.util.tag;
 
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
-/**
- * 分页标签
- */
+
 public class PagerTag extends SimpleTagSupport {
-	
+
 	/** 定义请求URL中的占位符常量 */
 	private static final String TAG = "{0}";
-	
 	/** 当前页码 */
 	private int pageIndex;
 	/** 每页显示的数量 */
@@ -22,24 +19,65 @@ public class PagerTag extends SimpleTagSupport {
 	private String submitUrl;
 	/** 样式 */
 	private String style = "sabrosus";
-	
 	/** 定义总页数 */
 	private int totalPage = 0;
 	
+	public int getPageIndex() {
+		return pageIndex;
+	}
+
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getRecordCount() {
+		return recordCount;
+	}
+
+	public void setRecordCount(int recordCount) {
+		this.recordCount = recordCount;
+	}
+
+	public String getSubmitUrl() {
+		return submitUrl;
+	}
+
+	public void setSubmitUrl(String submitUrl) {
+		this.submitUrl = submitUrl;
+	}
+
+	public int getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+
+
 	/**  在页面上引用自定义标签就会触发一个标签处理类   */
 	@Override
 	public void doTag() throws JspException, IOException {
+		// TODO Auto-generated method stub
 		/** 定义它拼接是终的结果 */
 		StringBuilder res = new StringBuilder();
 		/** 定义它拼接中间的页码 */
 		StringBuilder str = new StringBuilder();
 		/** 判断总记录条数 */
-		if (recordCount > 0){   //1499 / 15  = 100
+		if (recordCount > 0) {
 			/** 需要显示分页标签，计算出总页数 需要分多少页 */
-			totalPage = (this.recordCount - 1) / this.pageSize + 1; 
+			totalPage = (this.recordCount - 1) / this.pageSize + 1;
 			
 			/** 判断上一页或下一页需不需要加a标签 */
-			if (this.pageIndex == 1){ // 首页
+			if (1 == this.pageIndex) {
 				str.append("<span class='disabled'>上一页</span>");
 				
 				/** 计算中间的页码 */
@@ -98,22 +136,19 @@ public class PagerTag extends SimpleTagSupport {
 			res.append("      }");
 			res.append("}");
 			res.append("</script>");
-			
-			
 		}else{
 			res.append("<table align='center' style='font-size:13px;'><tr><td style='COLOR: #0061de; MARGIN-RIGHT: 3px; PADDING-TOP: 2px; TEXT-DECORATION: none'>总共<font color='red'>0</font>条记录，当前显示0-0条记录。</td></tr></table>");
 		}
 		this.getJspContext().getOut().print(res.toString());
 	}
 	
-	
 	/** 计算中间页码的方法 */
 	private void calcPage(StringBuilder str) {
 		/** 判断总页数 */
-		if (this.totalPage <= 11){
+		if(this.totalPage < 11){
 			/** 一次性显示全部的页码 */
-			for (int i = 1; i <= this.totalPage; i++){
-				if (this.pageIndex == i){
+			for (int i = 1; i < this.totalPage; i++) {
+				if(i == this.pageIndex){
 					/** 当前页码 */
 					str.append("<span class='current'>"+ i +"</span>");
 				}else{
@@ -124,8 +159,8 @@ public class PagerTag extends SimpleTagSupport {
 		}else{
 			/** 靠近首页 */
 			if (this.pageIndex <= 8){
-				for (int i = 1; i <= 10; i++){
-					if (this.pageIndex == i){
+				for (int i = 1; i < 10; i++) {
+					if(i == this.pageIndex){
 						/** 当前页码 */
 						str.append("<span class='current'>"+ i +"</span>");
 					}else{
@@ -136,9 +171,7 @@ public class PagerTag extends SimpleTagSupport {
 				str.append("...");
 				String tempUrl = this.submitUrl.replace(TAG, String.valueOf(this.totalPage));
 				str.append("<a href='"+ tempUrl +"'>"+ this.totalPage +"</a>");
-			}
-			/** 靠近尾页 */
-			else if (this.pageIndex + 8 >= this.totalPage){
+			}else if(this.pageIndex + 8 >= this.totalPage){
 				String tempUrl = this.submitUrl.replace(TAG, String.valueOf(1));
 				str.append("<a href='"+ tempUrl +"'>1</a>");
 				str.append("...");
@@ -175,21 +208,6 @@ public class PagerTag extends SimpleTagSupport {
 			}
 		}
 	}
-
-	/** setter 方法 */
-	public void setPageIndex(int pageIndex) {
-		this.pageIndex = pageIndex;
-	}
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-	public void setRecordCount(int recordCount) {
-		this.recordCount = recordCount;
-	}
-	public void setSubmitUrl(String submitUrl) {
-		this.submitUrl = submitUrl;
-	}
-	public void setStyle(String style) {
-		this.style = style;
-	}
+	
+	
 }
