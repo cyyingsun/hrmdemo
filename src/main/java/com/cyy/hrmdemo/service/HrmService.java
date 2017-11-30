@@ -18,7 +18,6 @@ import com.cyy.hrmdemo.util.tag.PageModel;
  */
 public interface HrmService {
 
-
 	/**
 	 * 用户登录
 	 * @param  loginname
