@@ -20,7 +20,9 @@
 	http://www.springframework.org/schema/aop 
 	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 	http://www.springframework.org/schema/websocket
-	http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd">
+	http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd
+	http://mybatis.org/schema/mybatis-spring 
+	http://mybatis.org/schema/mybatis-spring.xsd ">
 
 	 <!-- mybatis:scan会扫描org.fkit.dao包里的所有接口当作Spring的bean配置，之后可以进行依赖注入-->  
     <mybatis:scan base-package="com.cyy.hrmdemo.dao"/>   
